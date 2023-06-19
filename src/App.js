@@ -54,7 +54,7 @@ function reducer(state, { type, payload }) {
         currentOperand: null,
       };
     case ACTIONS.CLEAR:
-      return {};
+      return { currentOperand: "0" };
     case ACTIONS.DELETE:
       if (state.overwrite) {
         return {
@@ -63,7 +63,7 @@ function reducer(state, { type, payload }) {
           currentOperand: null,
         };
       }
-      if (state.currentOperand.length == null) return state;
+      if (state.currentOperand == null) return state;
       if (state.currentOperand.length === 1) {
         return { ...state, currentOperand: null };
       }
@@ -96,6 +96,7 @@ function evaluate({ currentOperand, previousOperand, operation }) {
   const current = +currentOperand;
   if (isNaN(prev) || isNaN(current)) return "";
   let computation = "";
+  // eslint-disable-next-line
   switch (operation) {
     case "+":
       computation = prev + current;
